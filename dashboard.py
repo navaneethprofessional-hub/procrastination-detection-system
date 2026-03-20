@@ -88,31 +88,31 @@ st.write("Distraction Time (seconds):", distraction_time)
 st.write("Productivity Score:", round(productivity_score, 2), "%")
 
 
-# Pie chart 1
+# Pie chart (Focus vs Distraction)
 st.subheader("Focus vs Distraction")
 
 labels = ["Focus", "Distraction"]
 values = [focus_time, distraction_time]
 
-fig, ax = plt.subplots()
-ax.pie(values, labels=labels, autopct='%1.1f%%')
+fig1, ax1 = plt.subplots()
+ax1.pie(values, labels=labels, autopct='%1.1f%%')
 
-st.pyplot(fig)
+st.pyplot(fig1)
 
 
-# NEW SECTION — Procrastination
+# Procrastination Analysis
 st.subheader("Procrastination Analysis")
 
 st.write("Your work got procrastinated by:", round(procrastination, 2), "%")
 
 
-# Pie chart 2
-st.subheader("Work vs Procrastination")
+# Bar Chart (Work vs Procrastination)
+st.subheader("Work vs Procrastination (Bar Chart)")
 
-labels2 = ["Work (Focus Apps)", "Procrastination"]
-values2 = [focus_time, distraction_time]
+labels_bar = ["Work (Focus)", "Procrastination"]
+values_bar = [focus_time, distraction_time]
 
 fig2, ax2 = plt.subplots()
-ax2.pie(values2, labels=labels2, autopct='%1.1f%%')
+ax2.bar(labels_bar, values_bar)
 
 st.pyplot(fig2)
