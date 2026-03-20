@@ -4,26 +4,38 @@ import csv
 from datetime import datetime
 import os
 
-# Display the current working directory (where CSV will be stored)
+# Display where CSV will be saved
 print("CSV will be saved at:", os.getcwd())
 
 
-# Function to extract clean application name from window title
+# Function to extract clean application name
 def get_app_name(title):
     title_lower = title.lower()
 
-    # Detect VS Code
+    # VS Code
     if "visual studio code" in title_lower:
         return "VS Code"
 
-    # Detect Google Chrome and extract tab name
+    # Power BI
+    elif "power bi" in title_lower:
+        return "Power BI"
+
+    # Excel
+    elif "excel" in title_lower:
+        return "Excel"
+
+    # Word
+    elif "word" in title_lower:
+        return "Word"
+
+    # Chrome tabs
     elif "google chrome" in title_lower:
         parts = title.split(" - ")
-        
+
         if len(parts) > 1:
             name = parts[0]
 
-            # Remove unwanted numbers like (2195)
+            # Remove numbers like (2195)
             if ")" in name:
                 name = name.split(")")[-1].strip()
 
@@ -31,45 +43,43 @@ def get_app_name(title):
 
         return "Chrome"
 
-    # Handle all other applications (PDF, WhatsApp, etc.)
+    # Other apps
     else:
         parts = title.split(" - ")
         return parts[0]
 
 
-# Create CSV file with header if it does not exist
+# Create CSV file if not exists
 if not os.path.exists("activity_log.csv"):
     with open("activity_log.csv", "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(["Time", "Application"])
 
 
-# Infinite loop to continuously track applications
+# Start tracking
 while True:
     try:
-        # Get the currently active window
         window = gw.getActiveWindow()
 
-        # Handle cases where no window title is available (Desktop)
+        # Handle Desktop
         if window is not None and window.title.strip() != "":
             app_name = get_app_name(window.title)
         else:
             app_name = "Desktop"
 
-        # Get current time in HH:MM:SS format
+        # Current time
         current_time = datetime.now().strftime("%H:%M:%S")
 
-        # Append data to CSV file
+        # Write to CSV
         with open("activity_log.csv", "a", newline="", encoding="utf-8") as file:
             writer = csv.writer(file)
             writer.writerow([current_time, app_name])
 
-        # Display output in terminal
+        # Print output
         print("Saved:", current_time, "-", app_name)
 
     except Exception as e:
-        # Handle errors gracefully
         print("Error:", e)
 
-    # Wait for 5 seconds before next tracking
+    # Wait 5 seconds
     time.sleep(5)
