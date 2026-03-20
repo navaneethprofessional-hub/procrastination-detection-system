@@ -76,3 +76,15 @@ st.subheader("Results")
 st.write("Focus Time (seconds):", focus_time)
 st.write("Distraction Time (seconds):", distraction_time)
 st.write("Productivity Score:", round(productivity_score, 2), "%")
+
+import matplotlib.pyplot as plt
+
+st.subheader("Focus vs Distraction")
+
+labels = ["Focus", "Distraction"]
+values = [focus_time, distraction_time]
+
+fig, ax = plt.subplots()
+ax.pie(values, labels=labels, autopct='%1.1f%%')
+
+st.pyplot(fig)
